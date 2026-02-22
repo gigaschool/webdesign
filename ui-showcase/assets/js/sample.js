@@ -33,17 +33,13 @@ if (
     // Header
     const header = document.createElement("div");
     header.className = "multi-header";
-    const backLink = document.createElement("a");
-    backLink.href = "../index.html";
-    backLink.className = "multi-back";
-    backLink.textContent = "← 見本一覧に戻る";
     const title = document.createElement("h1");
     title.className = "multi-title";
     title.textContent = item.term;
     const desc = document.createElement("p");
     desc.className = "multi-desc";
     desc.textContent = item.description;
-    header.append(backLink, title, desc);
+    header.append(title, desc);
     demoMount.append(header);
 
     // Examples
