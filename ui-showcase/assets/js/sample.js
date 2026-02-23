@@ -65,23 +65,39 @@ if (
       // Live demo area
       const demoArea = document.createElement("div");
       demoArea.className = "multi-ex-demo";
+
+      // Detect if demo has load-time animation (not static or infinite loop)
+      const css = ex.code?.css || "";
+      const js = ex.code?.js || "";
+      const hasKeyframes = css.includes("@keyframes");
+      const hasAnimation = /animation\s*:/.test(css);
+      const isInfinite = /animation[^;]*infinite/.test(css);
+      const hasJs = js.length > 0;
+      const needsReplay = hasJs || ((hasKeyframes || hasAnimation) && !isInfinite);
+
       const demoLabelRow = document.createElement("div");
       demoLabelRow.className = "multi-area-label-row";
       const demoLabel = document.createElement("div");
       demoLabel.className = "multi-area-label";
       demoLabel.textContent = "プレビュー";
-      const replayBtn = document.createElement("button");
-      replayBtn.type = "button";
-      replayBtn.className = "replay-btn";
-      replayBtn.textContent = "▶ もう一度再生";
-      demoLabelRow.append(demoLabel, replayBtn);
+      demoLabelRow.append(demoLabel);
+
       const demoContent = document.createElement("div");
       demoContent.className = "multi-ex-demo-content";
       ex.render(demoContent);
-      replayBtn.addEventListener("click", () => {
-        demoContent.innerHTML = "";
-        ex.render(demoContent);
-      });
+
+      if (needsReplay) {
+        const replayBtn = document.createElement("button");
+        replayBtn.type = "button";
+        replayBtn.className = "replay-btn";
+        replayBtn.textContent = "▶ もう一度再生";
+        replayBtn.addEventListener("click", () => {
+          demoContent.innerHTML = "";
+          ex.render(demoContent);
+        });
+        demoLabelRow.append(replayBtn);
+      }
+
       demoArea.append(demoLabelRow, demoContent);
 
       // Code area
