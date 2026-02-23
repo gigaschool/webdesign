@@ -116,7 +116,7 @@ if (
     shareBtn.textContent = "URLをコピー";
     shareBtn.addEventListener("click", async () => {
       const shareUrl = new URL(
-        `#${encodeURIComponent(term.slug)}`,
+        sampleUrl(term.slug),
         window.location.href
       ).href;
       const ok = await copyText(shareUrl);
