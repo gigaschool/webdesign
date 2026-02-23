@@ -141,7 +141,8 @@ if (
     const qrWrap = document.createElement("div");
     qrWrap.className = "qr-wrap";
     const qr = qrcode(0, "M");
-    qr.addData(window.location.href);
+    const qrUrl = "https://gigaschool.github.io/webdesign/ui-showcase/sample.html?slug=" + encodeURIComponent(slug);
+    qr.addData(qrUrl);
     qr.make();
     qrWrap.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0 });
     qrSection.append(qrLabel, qrWrap);
