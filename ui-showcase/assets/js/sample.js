@@ -65,13 +65,24 @@ if (
       // Live demo area
       const demoArea = document.createElement("div");
       demoArea.className = "multi-ex-demo";
+      const demoLabelRow = document.createElement("div");
+      demoLabelRow.className = "multi-area-label-row";
       const demoLabel = document.createElement("div");
       demoLabel.className = "multi-area-label";
       demoLabel.textContent = "プレビュー";
+      const replayBtn = document.createElement("button");
+      replayBtn.type = "button";
+      replayBtn.className = "replay-btn";
+      replayBtn.textContent = "▶ もう一度再生";
+      demoLabelRow.append(demoLabel, replayBtn);
       const demoContent = document.createElement("div");
       demoContent.className = "multi-ex-demo-content";
       ex.render(demoContent);
-      demoArea.append(demoLabel, demoContent);
+      replayBtn.addEventListener("click", () => {
+        demoContent.innerHTML = "";
+        ex.render(demoContent);
+      });
+      demoArea.append(demoLabelRow, demoContent);
 
       // Code area
       const codeArea = document.createElement("div");
@@ -148,4 +159,14 @@ if (
     qrSection.append(qrLabel, qrWrap);
     demoMount.append(qrSection);
   }
+
+  // Back to top button
+  const topBtnWrap = document.createElement("div");
+  topBtnWrap.className = "top-btn-wrap";
+  const topBtn = document.createElement("a");
+  topBtn.href = "https://gigaschool.github.io/webdesign/";
+  topBtn.className = "top-btn";
+  topBtn.textContent = "トップに戻る";
+  topBtnWrap.append(topBtn);
+  demoMount.append(topBtnWrap);
 }

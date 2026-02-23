@@ -669,6 +669,30 @@ body.multi-demo-page .sample-only-main {
   color: var(--text-muted);
   margin-bottom: 10px;
 }
+.multi-area-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.multi-area-label-row .multi-area-label {
+  margin-bottom: 0;
+}
+.replay-btn {
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--brand);
+  background: transparent;
+  border: 1.5px solid var(--brand);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.replay-btn:hover {
+  background: var(--brand);
+  color: #fff;
+}
 
 .multi-ex-demo {
   min-height: 120px;
@@ -770,6 +794,25 @@ body.multi-demo-page .sample-only-main {
 }
 .qr-wrap svg {
   display: block;
+}
+.top-btn-wrap {
+  text-align: center;
+  margin-top: 24px;
+  padding-bottom: 32px;
+}
+.top-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.top-btn:hover {
+  opacity: 0.85;
 }
 
 @media (max-width: 700px) {
