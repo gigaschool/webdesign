@@ -707,7 +707,9 @@ body.multi-demo-page .sample-only-main {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
+  transform: translateZ(0);
 }
 
 .multi-ex-codes {

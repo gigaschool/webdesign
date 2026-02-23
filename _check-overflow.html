@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="UTF-8"><title>Overflow Checker</title></head>
+<body>
+<div id="status">Loading...</div>
+<div id="results"></div>
+<script>
+const slugs = ["ui","ux","layout","centering","margin","padding","whitespace","grid","column","responsive","animation","transition","fade","slide","popup","hover-effect","microinteraction","particle","shake","flash","easing","pixel-art","retro-8bit","neon-cyberpunk","flat-design","material-design","minimal-design","color-unity","contrast","dark-mode","monotone","typography","icon","progress-bar","counter","badge","modal","dialog","overlay","splash-screen","primary-button","secondary-button","toggle-button","textbox","placeholder","dropdown-select","slider"];
+const iframe = document.createElement('iframe');
+iframe.style.cssText = 'width:800px;height:600px;border:1px solid #ccc;';
+document.body.appendChild(iframe);
+const issues = [];
+let idx = 0;
+
+function checkNext() {
+  if (idx >= slugs.length) {
+    document.getElementById('status').textContent = 'Done! Issues: ' + issues.length;
+    document.getElementById('results').textContent = JSON.stringify(issues, null, 2);
+    window._overflowIssues = issues;
+    return;
+  }
+  const slug = slugs[idx];
+  document.getElementById('status').textContent = 'Checking ' + slug + ' (' + (idx+1) + '/' + slugs.length + ')';
+  iframe.src = '/ui-showcase/sample.html?slug=' + slug;
+  iframe.onload = function() {
+    setTimeout(function() {
+      try {
+        const doc = iframe.contentDocument;
+        const demos = doc.querySelectorAll('.multi-ex-demo-content');
+        demos.forEach(function(d) {
+          const title = d.closest('.multi-example')?.querySelector('.multi-ex-title')?.textContent || '';
+          const rect = d.getBoundingClientRect();
+          // Check for absolute/fixed positioned elements
+          let hasAbsFixed = false;
+          let clipped = false;
+          d.querySelectorAll('*').forEach(function(el) {
+            const s = iframe.contentWindow.getComputedStyle(el);
+            if (s.position === 'absolute' || s.position === 'fixed') hasAbsFixed = true;
+            const cr = el.getBoundingClientRect();
+            if (cr.width > 0 && cr.height > 0) {
+              if (cr.bottom > rect.bottom + 2 || cr.right > rect.right + 2 || cr.top < rect.top - 2 || cr.left < rect.left - 2) {
+                clipped = true;
+              }
+            }
+          });
+          // Check scrollHeight vs clientHeight
+          const scrollOverflow = d.scrollHeight > d.clientHeight + 2 || d.scrollWidth > d.clientWidth + 2;
+          if (hasAbsFixed || clipped || scrollOverflow) {
+            issues.push({ slug: slug, title: title, hasAbsFixed, clipped, scrollOverflow });
+          }
+        });
+      } catch(e) {
+        issues.push({ slug: slug, error: e.message });
+      }
+      idx++;
+      checkNext();
+    }, 800);
+  };
+}
+checkNext();
+</script>
+</body></html>
