@@ -66,14 +66,17 @@ if (
       const demoArea = document.createElement("div");
       demoArea.className = "multi-ex-demo";
 
-      // Detect if demo has load-time animation (not static or infinite loop)
+      // Detect if demo has interactive/animated content
       const css = ex.code?.css || "";
       const js = ex.code?.js || "";
+      const html = ex.code?.html || "";
       const hasKeyframes = css.includes("@keyframes");
       const hasAnimation = /animation\s*:/.test(css);
       const isInfinite = /animation[^;]*infinite/.test(css);
       const hasJs = js.length > 0;
-      const needsReplay = hasJs || ((hasKeyframes || hasAnimation) && !isInfinite);
+      const hasOnclick = /onclick\s*=/.test(html);
+      const hasTransition = /transition\s*:/.test(css) && hasOnclick;
+      const needsReplay = hasJs || hasTransition || ((hasKeyframes || hasAnimation) && !isInfinite);
 
       const demoLabelRow = document.createElement("div");
       demoLabelRow.className = "multi-area-label-row";
