@@ -130,4 +130,21 @@ if (
     demo.querySelectorAll(".d-tip").forEach((el) => el.remove());
     demoMount.append(demo);
   }
+
+  // QR code at the bottom
+  if (typeof qrcode === "function") {
+    const qrSection = document.createElement("div");
+    qrSection.className = "qr-section";
+    const qrLabel = document.createElement("p");
+    qrLabel.className = "qr-label";
+    qrLabel.textContent = "このページのQRコード";
+    const qrWrap = document.createElement("div");
+    qrWrap.className = "qr-wrap";
+    const qr = qrcode(0, "M");
+    qr.addData(window.location.href);
+    qr.make();
+    qrWrap.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0 });
+    qrSection.append(qrLabel, qrWrap);
+    demoMount.append(qrSection);
+  }
 }
