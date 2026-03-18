@@ -72,11 +72,12 @@ if (
       const html = ex.code?.html || "";
       const hasKeyframes = css.includes("@keyframes");
       const hasAnimation = /animation\s*:/.test(css);
-      const isInfinite = /animation[^;]*infinite/.test(css);
+      const hasForwards = /animation[^;]*forwards/.test(css);
+      const isAllInfinite = /animation[^;]*infinite/.test(css) && !hasForwards;
       const hasJs = js.length > 0;
       const hasOnclick = /onclick\s*=/.test(html);
       const hasTransition = /transition\s*:/.test(css) && hasOnclick;
-      const needsReplay = hasJs || hasTransition || ((hasKeyframes || hasAnimation) && !isInfinite);
+      const needsReplay = hasJs || hasTransition || ((hasKeyframes || hasAnimation) && !isAllInfinite);
 
       const demoLabelRow = document.createElement("div");
       demoLabelRow.className = "multi-area-label-row";

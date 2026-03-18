@@ -613,8 +613,8 @@ function update() {
       render(c) {
         const p = id();
         addStyle(c, `
-          .${p}-stage { position:relative;width:100%;height:150px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb;overflow:hidden; }
-          .${p}-ov { position:absolute;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:2; }
+          .${p}-stage { position:relative;width:100%;min-height:180px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb; }
+          .${p}-ov { position:absolute;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:2;border-radius:8px; }
           .${p}-ov.show { display:flex; }
           .${p}-box { background:#fff;border-radius:10px;padding:16px 20px;width:220px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.18); }
           .${p}-title { font-size:.85rem;font-weight:700;margin-bottom:6px; }
@@ -670,8 +670,8 @@ function close() {
       render(c) {
         const p = id();
         addStyle(c, `
-          .${p}-stage { position:relative;width:100%;height:150px;border-radius:8px;background:#0f172a;overflow:hidden;display:flex;align-items:center;justify-content:center; }
-          .${p}-ov { position:absolute;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;flex-direction:column;gap:8px;z-index:2; }
+          .${p}-stage { position:relative;width:100%;min-height:180px;border-radius:8px;background:#0f172a;display:flex;align-items:center;justify-content:center; }
+          .${p}-ov { position:absolute;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;flex-direction:column;gap:8px;z-index:2;border-radius:8px; }
           .${p}-ov.show { display:flex; }
           .${p}-go { font-size:1.4rem;font-weight:900;color:#ef4444;text-transform:uppercase; }
           .${p}-sc { font-size:.8rem;color:#94a3b8; }
@@ -719,8 +719,8 @@ function retry() {
       render(c) {
         const p = id();
         addStyle(c, `
-          .${p}-stage { position:relative;width:100%;height:150px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb;overflow:hidden; }
-          .${p}-ov { position:absolute;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:2; }
+          .${p}-stage { position:relative;width:100%;min-height:180px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb; }
+          .${p}-ov { position:absolute;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:2;border-radius:8px; }
           .${p}-ov.show { display:flex; }
           .${p}-box { background:#fff;border-radius:12px;padding:16px;width:230px;box-shadow:0 8px 30px rgba(0,0,0,.18);position:relative; }
           .${p}-close { position:absolute;top:8px;right:10px;background:none;border:none;font-size:1rem;cursor:pointer;color:#6b7280; }
@@ -778,8 +778,8 @@ function close() {
       render(c) {
         const p = id();
         addStyle(c, `
-          .${p}-stage { position:relative;width:100%;height:150px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb;overflow:hidden; }
-          .${p}-ov { position:absolute;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:2; }
+          .${p}-stage { position:relative;width:100%;min-height:180px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb; }
+          .${p}-ov { position:absolute;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:2;border-radius:8px; }
           .${p}-ov.show { display:flex; }
           .${p}-dlg { background:#fff;border-radius:10px;padding:16px 20px;width:230px;box-shadow:0 4px 20px rgba(0,0,0,.15); }
           .${p}-ico { font-size:1.5rem;text-align:center;margin-bottom:6px; }
@@ -835,8 +835,8 @@ function close() {
       render(c) {
         const p = id();
         addStyle(c, `
-          .${p}-stage { position:relative;width:100%;height:150px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb;overflow:hidden; }
-          .${p}-ov { position:absolute;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:2; }
+          .${p}-stage { position:relative;width:100%;min-height:180px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb; }
+          .${p}-ov { position:absolute;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:2;border-radius:8px; }
           .${p}-ov.show { display:flex; }
           .${p}-dlg { background:#fff;border-radius:10px;padding:16px 20px;width:230px;border-top:4px solid #ef4444; }
           .${p}-ico { font-size:1.5rem;text-align:center;margin-bottom:4px; }
@@ -846,6 +846,9 @@ function close() {
           .${p}-del { padding:6px 18px;border:none;border-radius:6px;background:#ef4444;color:#fff;font-size:.75rem;font-weight:600;cursor:pointer; }
           .${p}-keep { padding:6px 18px;border:1px solid #d1d5db;border-radius:6px;background:#fff;font-size:.75rem;font-weight:600;cursor:pointer;color:#374151; }
           .${p}-trigger { position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);padding:8px 18px;font-size:.8rem;font-weight:600;border:none;border-radius:6px;background:#ef4444;color:#fff;cursor:pointer; }
+          .${p}-done { text-align:center; }
+          .${p}-done-ico { font-size:1.5rem;margin-bottom:4px; }
+          .${p}-done-msg { font-size:.85rem;font-weight:600;color:#16a34a; }
         `);
         const stage = h("div", `${p}-stage`);
         const ov = h("div", `${p}-ov`);
@@ -857,12 +860,42 @@ function close() {
         const keep = makeBtn("キャンセル", `${p}-keep`);
         const del = makeBtn("削除する", `${p}-del`);
         keep.addEventListener("click", () => ov.classList.remove("show"));
-        del.addEventListener("click", () => ov.classList.remove("show"));
+        del.addEventListener("click", () => {
+          dlg.innerHTML = "";
+          const done = h("div", `${p}-done`);
+          done.append(h("div", `${p}-done-ico`, "✅"));
+          done.append(h("div", `${p}-done-msg`, "削除しました"));
+          dlg.append(done);
+          dlg.style.borderTopColor = "#16a34a";
+          setTimeout(() => ov.classList.remove("show"), 1200);
+        });
         btns.append(keep, del);
         dlg.append(btns);
         ov.append(dlg);
         const trigger = makeBtn("⚠️ データ削除", `${p}-trigger`);
-        trigger.addEventListener("click", () => ov.classList.add("show"));
+        trigger.addEventListener("click", () => {
+          dlg.innerHTML = "";
+          dlg.style.borderTopColor = "#ef4444";
+          dlg.append(h("div", `${p}-ico`, "⚠️"));
+          dlg.append(h("div", `${p}-h`, "警告"));
+          dlg.append(h("div", `${p}-msg`, "この操作を実行するとデータが完全に削除されます。元に戻せません。"));
+          const newBtns = h("div", `${p}-btns`);
+          const newKeep = makeBtn("キャンセル", `${p}-keep`);
+          const newDel = makeBtn("削除する", `${p}-del`);
+          newKeep.addEventListener("click", () => ov.classList.remove("show"));
+          newDel.addEventListener("click", () => {
+            dlg.innerHTML = "";
+            const done = h("div", `${p}-done`);
+            done.append(h("div", `${p}-done-ico`, "✅"));
+            done.append(h("div", `${p}-done-msg`, "削除しました"));
+            dlg.append(done);
+            dlg.style.borderTopColor = "#16a34a";
+            setTimeout(() => ov.classList.remove("show"), 1200);
+          });
+          newBtns.append(newKeep, newDel);
+          dlg.append(newBtns);
+          ov.classList.add("show");
+        });
         stage.append(trigger, ov);
         c.append(stage);
       },
@@ -889,8 +922,8 @@ function close() {
       render(c) {
         const p = id();
         addStyle(c, `
-          .${p}-stage { position:relative;width:100%;height:150px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb;overflow:hidden; }
-          .${p}-ov { position:absolute;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:2; }
+          .${p}-stage { position:relative;width:100%;min-height:180px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb; }
+          .${p}-ov { position:absolute;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:2;border-radius:8px; }
           .${p}-ov.show { display:flex; }
           .${p}-dlg { background:#fff;border-radius:10px;padding:16px 20px;width:230px; }
           .${p}-h { font-size:.85rem;font-weight:700;margin-bottom:8px; }
@@ -1058,7 +1091,7 @@ function resume() {
       render(c) {
         const p = id();
         addStyle(c, `
-          .${p}-stage { position:relative;width:100%;height:150px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb;overflow:hidden; }
+          .${p}-stage { position:relative;width:100%;min-height:150px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb; }
           .${p}-thumbs { display:flex;gap:8px;padding:10px;justify-content:center; }
           .${p}-thumb { width:60px;height:44px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.5rem;transition:transform .2s;border:2px solid #e5e7eb;background:#fff; }
           .${p}-thumb:hover { transform:scale(1.1); }

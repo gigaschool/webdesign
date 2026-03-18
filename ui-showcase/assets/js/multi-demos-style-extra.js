@@ -652,7 +652,9 @@
         const blog = h("div", `${p}-blog`);
         blog.append(h("div", `${p}-date`, "March 18, 2026"));
         blog.append(h("h3", `${p}-title`, "余白が生み出す静かな美しさ"));
-        blog.append(document.createElement("hr")).className = `${p}-sep`;
+        const sep = document.createElement("hr");
+        sep.className = `${p}-sep`;
+        blog.append(sep);
         blog.append(h("p", `${p}-body`, "ミニマルデザインでは要素を削ぎ落とし、残されたものだけで語る。余白こそが最大の表現力を持つ。"));
         blog.append(h("a", `${p}-more`, "続きを読む →"));
         c.append(blog);
@@ -914,7 +916,9 @@
         fail.append(failSample);
         fail.append(h("div", `${p}-ratio`, "コントラスト比 1.6:1"));
         const fl = h("span", `${p}-label ${p}-label--fail`, "FAIL");
-        fail.append(h("div", "")).append(fl);
+        const flWrap = h("div", "");
+        flWrap.append(fl);
+        fail.append(flWrap);
         wrap.append(fail);
 
         const pass = h("div", `${p}-box ${p}-pass`);
@@ -926,7 +930,9 @@
         pass.append(passSample);
         pass.append(h("div", `${p}-ratio`, "コントラスト比 17.4:1"));
         const pl = h("span", `${p}-label ${p}-label--pass`, "AAA ✓");
-        pass.append(h("div", "")).append(pl);
+        const plWrap = h("div", "");
+        plWrap.append(pl);
+        pass.append(plWrap);
         wrap.append(pass);
 
         c.append(wrap);
