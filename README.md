@@ -56,4 +56,4 @@ ui-showcase/
 
 ## ライセンス
 
-教育目的で作成されています。
+[MIT License](./LICENSE)
