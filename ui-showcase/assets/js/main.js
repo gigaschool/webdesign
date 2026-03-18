@@ -3,7 +3,7 @@ const renderDemo = window.createUiDemo;
 
 const cardsEl = document.getElementById("cards");
 const searchInput = document.getElementById("searchInput");
-const categorySelect = document.getElementById("categorySelect");
+const categoryTabs = document.getElementById("categoryTabs");
 const countLabel = document.getElementById("countLabel");
 
 if (
@@ -42,11 +42,23 @@ if (
     }
   };
 
+  let selectedCategory = "すべて";
+
   for (const category of categories) {
-    const option = document.createElement("option");
-    option.value = category;
-    option.textContent = category;
-    categorySelect.appendChild(option);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "cat-tab";
+    btn.textContent = category;
+    btn.setAttribute("aria-selected", category === "すべて" ? "true" : "false");
+    btn.addEventListener("click", () => {
+      selectedCategory = category;
+      categoryTabs.querySelectorAll(".cat-tab").forEach(t =>
+        t.setAttribute("aria-selected", "false")
+      );
+      btn.setAttribute("aria-selected", "true");
+      render();
+    });
+    categoryTabs.appendChild(btn);
   }
 
   function sampleUrl(slug) {
@@ -95,21 +107,14 @@ if (
     const desc = document.createElement("p");
     desc.textContent = term.description;
 
-    const promptLabel = document.createElement("p");
-    promptLabel.className = "prompt-label";
-    promptLabel.textContent = "AIへの相談例";
-
-    const prompt = document.createElement("pre");
-    prompt.textContent = term.prompt.split("\n")[0];
-
-    content.append(desc, promptLabel, prompt);
+    content.append(desc);
 
     const links = document.createElement("div");
     links.className = "links card-footer";
 
     const openLink = document.createElement("a");
     openLink.href = sampleUrl(term.slug);
-    openLink.textContent = "見本を開く";
+    openLink.textContent = "見本を開く →";
 
     const shareBtn = document.createElement("button");
     shareBtn.type = "button";
@@ -133,10 +138,9 @@ if (
 
   function filterTerms() {
     const q = searchInput.value.trim().toLowerCase();
-    const category = categorySelect.value;
 
     return terms.filter((term) => {
-      const matchCategory = category === "すべて" || term.category === category;
+      const matchCategory = selectedCategory === "すべて" || term.category === selectedCategory;
       const searchable = `${term.term} ${term.description} ${term.prompt}`.toLowerCase();
       const matchQuery = q.length === 0 || searchable.includes(q);
       return matchCategory && matchQuery;
@@ -149,11 +153,10 @@ if (
     filtered.forEach((term, i) => {
       cardsEl.appendChild(cardTemplate(term, i));
     });
-    countLabel.textContent = `${filtered.length}件表示`;
+    countLabel.textContent = `${filtered.length}件`;
   }
 
   searchInput.addEventListener("input", render);
-  categorySelect.addEventListener("change", render);
   render();
 
   const hash = decodeURIComponent(window.location.hash.replace("#", ""));

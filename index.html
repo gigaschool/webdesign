@@ -10,29 +10,27 @@
   <link rel="stylesheet" href="ui-showcase/assets/css/style.css" />
 </head>
 <body>
-  <header class="hero">
+  <header class="hero hero--top">
     <div class="hero-inner">
-      <span class="eyebrow">第3部 デザインの魔法</span>
-      <h1>デザイン・UI・演出の<br class="sp-only" />言葉47</h1>
-      <p class="lead">用語ごとのインタラクティブな見本をすぐ確認できます。<br />カードをクリックして、実際の動きを体験しましょう。</p>
+      <h1>デザイン・UI・演出の<br class="sp-only" />言葉<span class="hero-num">47</span></h1>
+      <p class="lead">用語ごとのインタラクティブな見本をすぐ確認できます</p>
     </div>
-    <div class="controls">
+  </header>
+
+  <div class="toolbar">
+    <div class="toolbar-inner">
       <div class="search-wrap">
         <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         <input id="searchInput" type="search" placeholder="用語を検索..." aria-label="用語検索" />
       </div>
-      <select id="categorySelect" aria-label="カテゴリ選択"></select>
+      <nav id="categoryTabs" class="cat-tabs" aria-label="カテゴリ選択"></nav>
+      <p id="countLabel" class="count-label"></p>
     </div>
-  </header>
+  </div>
 
   <main>
-    <section class="section-title-row">
-      <h2>見本一覧</h2>
-      <p id="countLabel" class="count-label"></p>
-    </section>
     <section id="cards" class="cards"></section>
   </main>
-
 
   <script src="ui-showcase/assets/js/terms.js"></script>
   <script src="ui-showcase/assets/js/demos.js"></script>
