@@ -282,6 +282,37 @@ h1 {
   border-color: var(--text-primary);
 }
 
+/* --- View Toggle --- */
+.view-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.view-btn {
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.view-btn.active {
+  background: var(--text-primary);
+  color: #fff;
+}
+
+.view-btn:not(.active):hover {
+  color: var(--text-primary);
+}
+
 .toolbar .count-label {
   font-size: 0.75rem;
   color: var(--text-muted);
@@ -463,6 +494,69 @@ main {
   color: var(--text-muted);
   letter-spacing: 0.03em;
   margin: 0;
+}
+
+/* --- Prompt List View --- */
+.prompt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.prompt-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--card-accent, var(--border));
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  animation: card-enter 0.3s ease both;
+}
+
+.prompt-row-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.prompt-row-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.prompt-row-link {
+  margin-left: auto;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--brand);
+  white-space: nowrap;
+}
+
+.prompt-row-link:hover {
+  color: var(--brand-dark);
+}
+
+.prompt-row-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.prompt-row-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+}
+
+.prompt-row-text {
+  flex: 1;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text-primary);
 }
 
 /* Card prompt */

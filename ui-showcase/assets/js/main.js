@@ -5,6 +5,7 @@ const cardsEl = document.getElementById("cards");
 const searchInput = document.getElementById("searchInput");
 const categoryTabs = document.getElementById("categoryTabs");
 const countLabel = document.getElementById("countLabel");
+const viewToggle = document.getElementById("viewToggle");
 
 if (
   !data ||
@@ -47,6 +48,7 @@ if (
   };
 
   let selectedCategory = "すべて";
+  let viewMode = "cards";
 
   for (const category of categories) {
     const btn = document.createElement("button");
@@ -65,6 +67,16 @@ if (
     categoryTabs.appendChild(btn);
   }
 
+  // View toggle
+  viewToggle.querySelectorAll(".view-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      viewToggle.querySelectorAll(".view-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      viewMode = btn.dataset.view;
+      render();
+    });
+  });
+
   function sampleUrl(slug) {
     return `ui-showcase/sample.html?slug=${encodeURIComponent(slug)}`;
   }
@@ -76,6 +88,24 @@ if (
     } catch {
       return false;
     }
+  }
+
+  function makeCopyBtn(text, cls) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = cls;
+    btn.textContent = "コピー";
+    btn.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      const ok = await copyText(text);
+      btn.textContent = ok ? "コピー済み ✓" : "失敗";
+      btn.classList.add("copied");
+      setTimeout(() => {
+        btn.textContent = "コピー";
+        btn.classList.remove("copied");
+      }, 1500);
+    });
+    return btn;
   }
 
   function cardTemplate(term, index) {
@@ -122,21 +152,7 @@ if (
     const promptP = document.createElement("p");
     promptP.className = "card-prompt-text";
     promptP.textContent = promptText;
-    const promptCopy = document.createElement("button");
-    promptCopy.type = "button";
-    promptCopy.className = "card-prompt-copy";
-    promptCopy.textContent = "コピー";
-    promptCopy.addEventListener("click", async (e) => {
-      e.stopPropagation();
-      const ok = await copyText(promptText);
-      promptCopy.textContent = ok ? "コピー済み ✓" : "失敗";
-      promptCopy.classList.add("copied");
-      setTimeout(() => {
-        promptCopy.textContent = "コピー";
-        promptCopy.classList.remove("copied");
-      }, 1500);
-    });
-    promptWrap.append(promptP, promptCopy);
+    promptWrap.append(promptP, makeCopyBtn(promptText, "card-prompt-copy"));
     content.append(promptWrap);
 
     const links = document.createElement("div");
@@ -166,6 +182,58 @@ if (
     return article;
   }
 
+  function promptRowTemplate(term, index) {
+    const row = document.createElement("div");
+    row.className = "prompt-row";
+    row.style.animationDelay = `${Math.min(index * 0.02, 0.4)}s`;
+
+    const colors = categoryColors[term.category];
+    if (colors) {
+      row.style.setProperty("--card-accent", colors.accent);
+    }
+
+    const header = document.createElement("div");
+    header.className = "prompt-row-header";
+
+    const badge = document.createElement("span");
+    badge.className = "card-badge";
+    badge.textContent = term.category;
+    if (colors) {
+      badge.style.setProperty("--badge-bg", colors.bg);
+      badge.style.setProperty("--badge-text", colors.text);
+      badge.style.setProperty("--badge-border", colors.border);
+    }
+
+    const title = document.createElement("h3");
+    title.className = "prompt-row-title";
+    title.textContent = term.term;
+
+    const link = document.createElement("a");
+    link.href = sampleUrl(term.slug);
+    link.className = "prompt-row-link";
+    link.textContent = "見本 →";
+
+    header.append(badge, title, link);
+    row.append(header);
+
+    const prompts = term.prompt.split("\n").map(s => s.trim()).filter(s => s.length > 0);
+    const list = document.createElement("div");
+    list.className = "prompt-row-list";
+
+    prompts.forEach(text => {
+      const item = document.createElement("div");
+      item.className = "prompt-row-item";
+      const p = document.createElement("p");
+      p.className = "prompt-row-text";
+      p.textContent = text;
+      item.append(p, makeCopyBtn(text, "prompt-copy-btn"));
+      list.append(item);
+    });
+
+    row.append(list);
+    return row;
+  }
+
   function filterTerms() {
     const q = searchInput.value.trim().toLowerCase();
 
@@ -180,9 +248,19 @@ if (
   function render() {
     cardsEl.innerHTML = "";
     const filtered = filterTerms();
-    filtered.forEach((term, i) => {
-      cardsEl.appendChild(cardTemplate(term, i));
-    });
+
+    if (viewMode === "prompts") {
+      cardsEl.className = "prompt-list";
+      filtered.forEach((term, i) => {
+        cardsEl.appendChild(promptRowTemplate(term, i));
+      });
+    } else {
+      cardsEl.className = "cards";
+      filtered.forEach((term, i) => {
+        cardsEl.appendChild(cardTemplate(term, i));
+      });
+    }
+
     countLabel.textContent = `${filtered.length}件`;
   }
 

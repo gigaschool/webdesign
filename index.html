@@ -26,7 +26,7 @@
   <header class="hero hero--top">
     <div class="hero-inner">
       <h1>デザイン・UI・演出の<br class="sp-only" />言葉<span class="hero-num">47</span></h1>
-      <p class="lead">用語ごとのインタラクティブな見本をすぐ確認できます</p>
+      <p class="lead">AIにどう指示すればいい？ 用語ごとの見本とコピペで使えるプロンプト集</p>
     </div>
   </header>
 
@@ -37,6 +37,10 @@
         <input id="searchInput" type="search" placeholder="用語を検索..." aria-label="用語検索" />
       </div>
       <nav id="categoryTabs" class="cat-tabs" aria-label="カテゴリ選択"></nav>
+      <div id="viewToggle" class="view-toggle">
+        <button type="button" class="view-btn active" data-view="cards">見本</button>
+        <button type="button" class="view-btn" data-view="prompts">プロンプト一覧</button>
+      </div>
       <p id="countLabel" class="count-label"></p>
     </div>
   </div>

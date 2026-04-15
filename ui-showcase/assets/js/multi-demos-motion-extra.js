@@ -1131,16 +1131,19 @@ function toggle(idx) {
       render(c) {
         const p = id();
         addStyle(c, `
-          .${p}-wrap { text-align:center;height:110px;position:relative; }
-          .${p}-ball { width:36px;height:36px;background:#ef4444;border-radius:50%;position:absolute;left:calc(50% - 18px);top:0; }
+          .${p}-wrap { text-align:center;position:relative; }
+          .${p}-stage { position:relative;height:100px;margin-bottom:8px; }
+          .${p}-ball { width:32px;height:32px;background:#ef4444;border-radius:50%;position:absolute;left:calc(50% - 16px);top:0; }
           .${p}-ball.drop { animation:${p}-bounce 1s forwards; }
-          @keyframes ${p}-bounce { 0%{top:0} 30%{top:70px} 45%{top:40px} 58%{top:70px} 68%{top:55px} 76%{top:70px} 84%{top:64px} 100%{top:70px} }
+          @keyframes ${p}-bounce { 0%{top:0} 30%{top:60px} 45%{top:30px} 58%{top:60px} 68%{top:45px} 76%{top:60px} 84%{top:54px} 100%{top:60px} }
           .${p}-floor { position:absolute;bottom:0;left:10%;right:10%;height:2px;background:#d1d5db; }
-          .${p}-btn { position:absolute;bottom:4px;left:50%;transform:translateX(-50%);padding:4px 14px;font-size:.7rem;font-weight:600;border:none;border-radius:4px;background:#ef4444;color:#fff;cursor:pointer; }
+          .${p}-btn { padding:6px 16px;font-size:.7rem;font-weight:600;border:none;border-radius:4px;background:#ef4444;color:#fff;cursor:pointer;white-space:nowrap; }
         `);
         const w = h("div", `${p}-wrap`);
+        const stage = h("div", `${p}-stage`);
         const ball = h("div", `${p}-ball`);
-        w.append(ball, h("div", `${p}-floor`));
+        stage.append(ball, h("div", `${p}-floor`));
+        w.append(stage);
         const btn = makeBtn("▶ ドロップ", `${p}-btn`);
         btn.addEventListener("click", () => {
           ball.classList.remove("drop");
