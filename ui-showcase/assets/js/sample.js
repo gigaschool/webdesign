@@ -104,14 +104,49 @@ if (
 
       demoArea.append(demoLabelRow, demoContent);
 
-      // Code area
-      const codeArea = document.createElement("div");
-      codeArea.className = "multi-ex-codes";
-      const codeLabel = document.createElement("div");
-      codeLabel.className = "multi-area-label";
-      codeLabel.textContent = "コード";
+      // Prompt + Code area (right side)
+      const rightArea = document.createElement("div");
+      rightArea.className = "multi-ex-right";
 
+      // AI Prompt
+      const promptText = `${item.term}で「${ex.title}」を実装したいです。${ex.desc || ""}`;
+      const promptArea = document.createElement("div");
+      promptArea.className = "multi-ex-prompt";
+      const promptLabel = document.createElement("div");
+      promptLabel.className = "multi-area-label";
+      promptLabel.textContent = "AIプロンプト";
+      const promptCard = document.createElement("div");
+      promptCard.className = "prompt-card";
+      const promptP = document.createElement("p");
+      promptP.className = "prompt-card-text";
+      promptP.textContent = promptText;
+      const promptCopy = document.createElement("button");
+      promptCopy.type = "button";
+      promptCopy.className = "prompt-copy-btn";
+      promptCopy.textContent = "コピー";
+      promptCopy.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(promptText);
+          promptCopy.textContent = "コピー済み ✓";
+          promptCopy.classList.add("copied");
+        } catch {
+          promptCopy.textContent = "失敗";
+        }
+        setTimeout(() => { promptCopy.textContent = "コピー"; promptCopy.classList.remove("copied"); }, 1500);
+      });
+      promptCard.append(promptP, promptCopy);
+      promptArea.append(promptLabel, promptCard);
+      rightArea.append(promptArea);
+
+      // Collapsible code area
       if (ex.code) {
+        const codeWrap = document.createElement("details");
+        codeWrap.className = "code-details";
+        const codeSummary = document.createElement("summary");
+        codeSummary.className = "code-toggle";
+        codeSummary.textContent = "コードを見る";
+        codeWrap.append(codeSummary);
+
         const blocks = [];
         if (ex.code.css) blocks.push(["CSS", ex.code.css]);
         if (ex.code.html) blocks.push(["HTML", ex.code.html]);
@@ -143,12 +178,13 @@ if (
           codeEl.textContent = code;
           pre.append(codeEl);
           block.append(blockHeader, pre);
-          codeArea.append(block);
+          codeWrap.append(block);
         });
+
+        rightArea.append(codeWrap);
       }
 
-      codeArea.prepend(codeLabel);
-      body.append(demoArea, codeArea);
+      body.append(demoArea, rightArea);
       section.append(body);
       demoMount.append(section);
     });
@@ -161,6 +197,8 @@ if (
     demo.querySelectorAll(".d-tip").forEach((el) => el.remove());
     demoMount.append(demo);
   }
+
+
 
   // QR code at the bottom
   if (typeof qrcode === "function") {

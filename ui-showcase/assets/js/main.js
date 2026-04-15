@@ -23,22 +23,26 @@ if (
     "画面の基本": {
       bg: "var(--cat-basics-bg)",
       text: "var(--cat-basics-text)",
-      border: "var(--cat-basics-border)"
+      border: "var(--cat-basics-border)",
+      accent: "var(--cat-basics)"
     },
     "動き・演出": {
       bg: "var(--cat-motion-bg)",
       text: "var(--cat-motion-text)",
-      border: "var(--cat-motion-border)"
+      border: "var(--cat-motion-border)",
+      accent: "var(--cat-motion)"
     },
     "見た目・スタイル": {
       bg: "var(--cat-style-bg)",
       text: "var(--cat-style-text)",
-      border: "var(--cat-style-border)"
+      border: "var(--cat-style-border)",
+      accent: "var(--cat-style)"
     },
     "UIパーツ": {
       bg: "var(--cat-parts-bg)",
       text: "var(--cat-parts-text)",
-      border: "var(--cat-parts-border)"
+      border: "var(--cat-parts-border)",
+      accent: "var(--cat-parts)"
     }
   };
 
@@ -81,6 +85,9 @@ if (
     article.style.animationDelay = `${Math.min(index * 0.03, 0.6)}s`;
 
     const colors = categoryColors[term.category];
+    if (colors) {
+      article.style.setProperty("--card-accent", colors.accent);
+    }
 
     const header = document.createElement("div");
     header.className = "card-header";
@@ -108,6 +115,29 @@ if (
     desc.textContent = term.description;
 
     content.append(desc);
+
+    const promptText = term.prompt.split("\n")[0].trim();
+    const promptWrap = document.createElement("div");
+    promptWrap.className = "card-prompt";
+    const promptP = document.createElement("p");
+    promptP.className = "card-prompt-text";
+    promptP.textContent = promptText;
+    const promptCopy = document.createElement("button");
+    promptCopy.type = "button";
+    promptCopy.className = "card-prompt-copy";
+    promptCopy.textContent = "コピー";
+    promptCopy.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      const ok = await copyText(promptText);
+      promptCopy.textContent = ok ? "コピー済み ✓" : "失敗";
+      promptCopy.classList.add("copied");
+      setTimeout(() => {
+        promptCopy.textContent = "コピー";
+        promptCopy.classList.remove("copied");
+      }, 1500);
+    });
+    promptWrap.append(promptP, promptCopy);
+    content.append(promptWrap);
 
     const links = document.createElement("div");
     links.className = "links card-footer";

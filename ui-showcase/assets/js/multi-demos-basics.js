@@ -1295,14 +1295,17 @@ footer { background: #e5e7eb; padding: 6px; text-align: center; }`,
       render(c) {
         const p = id();
         addStyle(c, `
-          .${p}-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px; }
-          .${p}-cell { background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:10px;text-align:center;font-size:.65rem;font-weight:600;color:#166534; }
+          .${p}-wrap { width:100%; }
+          .${p}-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:6px;width:100%; }
+          .${p}-cell { background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:8px 4px;text-align:center;font-size:.6rem;font-weight:600;color:#166534; }
           .${p}-note { font-size:.55rem;color:#6b7280;margin-top:6px;text-align:center; }
         `);
+        const wrap = h("div", `${p}-wrap`);
         const grid = h("div", `${p}-grid`);
         for (let i = 1; i <= 8; i++) grid.append(h("div", `${p}-cell`, "Item " + i));
-        c.append(grid);
-        c.append(h("div", `${p}-note`, "auto-fill + minmax() で幅に応じて列数が変わる"));
+        wrap.append(grid);
+        wrap.append(h("div", `${p}-note`, "auto-fill + minmax() で幅に応じて列数が変わる"));
+        c.append(wrap);
       },
       code: {
         css: `.grid {
